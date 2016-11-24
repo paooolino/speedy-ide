@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-		"open": "node open.js & npm start",
+    "open": "node open.js & npm start",
     "start": "webpack-dev-server --inline --content-base build/ --history-api-fallback",
     "build": "webpack"
   },
@@ -21,8 +21,10 @@
   },
   "homepage": "https://github.com/paooolino/speedy-ide#readme",
   "dependencies": {
+    "brace": "^0.9.0",
     "isomorphic-fetch": "^2.2.1",
     "react": "^15.4.1",
+    "react-ace": "^4.1.0",
     "react-dom": "^15.4.1",
     "react-redux": "^4.4.6",
     "react-router": "^3.0.0",
