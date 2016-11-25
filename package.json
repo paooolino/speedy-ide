@@ -44,6 +44,7 @@
     "opn": "^4.0.2",
     "react-addons-test-utils": "^15.4.1",
     "webpack": "^1.13.3",
-    "zombie": "^5.0.5"
+    "zombie": "^5.0.5",
+		"tachyons": "^4.5.5"
   }
 }
