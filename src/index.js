@@ -17,12 +17,14 @@ import { reducer as formReducer } from 'redux-form';
 
 import Layout from './components/Layout';
 import HomePage from './components/HomePage';
+import uiReducer from './redux/ui';
 
 /*
 	store creation
 */
 
 let store = createStore(combineReducers({
+	ui: uiReducer,
 	routing: routerReducer,
 	form: formReducer
 }), applyMiddleware(thunk, routerMiddleware(browserHistory)));
