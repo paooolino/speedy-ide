@@ -5,6 +5,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import brace from 'brace';
+import 'brace/mode/html';
+import 'brace/mode/javascript';
+import 'brace/theme/github';
+import AceEditor from 'react-ace';
 
 /*
 	internal imports
@@ -43,9 +48,17 @@ class Layout extends Component {
 					}}
 					className="ContentHeight bg-light-gray"
 				>
-					<div className="fl tc h-100 br b--light-silver" style={{width: this.props.handlerPos + '%'}}>
+					<div className="fl h-100 br b--light-silver" style={{width: this.props.handlerPos + '%'}}>
+
 					</div>
-					<div className="fl tc h-100 bl b--white" style={{width: (100 - this.props.handlerPos) + '%'}}>
+					<div className="fl h-100 bl b--white" style={{width: (100 - this.props.handlerPos) + '%'}}>
+						<AceEditor
+							mode="html"
+							width="100%"
+							height="100%"
+							theme="github"
+							tabSize={2}
+						/>
 					</div>
 					<div 
 						onMouseDown={this.props.begin_drag} 

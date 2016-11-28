@@ -29,7 +29,7 @@ let store = createStore(combineReducers({
 	form: formReducer
 }), applyMiddleware(thunk, routerMiddleware(browserHistory)));
 
-store.subscribe(() =>	console.log(store.getState().ui));
+//store.subscribe(() =>	console.log(store.getState().ui));
 
 /*
 	history <> store sync
