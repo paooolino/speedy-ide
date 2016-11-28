@@ -16,7 +16,7 @@ import AceEditor from 'react-ace';
 */
 
 import * as actions_ui from '../redux/ui';
-//##HELPER_COMPONENTS##
+import FileTree from './FileTree';
 
 /*
 	stateless component
@@ -49,7 +49,7 @@ class Layout extends Component {
 					className="ContentHeight bg-light-gray"
 				>
 					<div className="fl h-100 br b--light-silver" style={{width: this.props.handlerPos + '%'}}>
-
+						<FileTree />
 					</div>
 					<div className="fl h-100 bl b--white" style={{width: (100 - this.props.handlerPos) + '%'}}>
 						<AceEditor
