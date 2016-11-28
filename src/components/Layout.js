@@ -24,29 +24,34 @@ class Layout extends Component {
 		super(props);
 	}
 	
-	componentWillMount() {
-		this.props.onResize();
-	}
-	
 	componentWillReceiveProps(nextProps) {
 		//##COMPONENT_WILL_RECEIVE_PROPS##
-	}
-	
-	componentDidMount() {
-		window.addEventListener("resize", this.props.onResize);
 	}
 	
 	render() {
 		return (
 			<div id="Layout" className="h-100">
-				<div className="bg-gray" style={{height: this.props.headerHeight}}>
+				<div className="HeaderHeight bg-gray">
 				</div>
-				<div className="bg-light-gray" style={{height: this.props.contentHeight}}>
-					<div className="fl tc h-100 br b--light-silver" style={{width: this.props.leftWidth}}>
+				<div 
+					onMouseUp={this.props.end_drag}
+					onMouseLeave={this.props.end_drag}
+					onMouseMove={(evt) => {
+						if(this.props.isDragging) {
+							this.props.move_handler(evt.clientX);
+						}
+					}}
+					className="ContentHeight bg-light-gray"
+				>
+					<div className="fl tc h-100 br b--light-silver" style={{width: this.props.handlerPos + '%'}}>
 					</div>
-					<div className="fl tc h-100 bl b--white" style={{width: this.props.rightWidth}}>
+					<div className="fl tc h-100 bl b--white" style={{width: (100 - this.props.handlerPos) + '%'}}>
 					</div>
-					<div className="absolute h-100 w1 bg-red" onDrag={this.props.onResizePanels} style={{cursor: 'col-resize', left: this.props.leftWidth, marginLeft: '-0.5rem'}}>
+					<div 
+						onMouseDown={this.props.begin_drag} 
+						className="ResizeHandler absolute h-100" 
+						style={{left: this.props.handlerPos + '%'}}
+					>
 					</div>
 				</div>
 			</div>
@@ -66,10 +71,6 @@ class Layout extends Component {
 */
 
 Layout.propTypes = {
-	headerHeight: PropTypes.number.isRequired,
-	contentHeight: PropTypes.number.isRequired,
-	leftWidth: PropTypes.number.isRequired,
-	rightWidth: PropTypes.number.isRequired
 }
 
 /*
@@ -77,18 +78,15 @@ Layout.propTypes = {
 */
 
 const mapDispatchToProps = (dispatch) => ({
-	onResize: (evt) => {
-		const headerHeight = 80;
-		const leftWidth = 300;
-		dispatch(actions_ui.resize_layout(
-			headerHeight, 
-			window.innerHeight - headerHeight,
-			leftWidth,
-			window.innerWidth - leftWidth
-		));
+	begin_drag: (evt) => {
+		dispatch(actions_ui.begin_drag());
+		evt.preventDefault();
 	},
-	onResizePanels: (evt) => {
-		console.log(evt.clientX);
+	end_drag: (evt) => {
+		dispatch(actions_ui.end_drag());
+	},
+	move_handler: (posX) => {
+		dispatch(actions_ui.set_handler_pos((posX/window.innerWidth)*100));
 	}
 });
 
@@ -97,10 +95,8 @@ const mapDispatchToProps = (dispatch) => ({
 */
 
 const mapStateToProps = (state) => ({
-	headerHeight: state.ui.headerHeight,
-	contentHeight: state.ui.contentHeight,
-	leftWidth: state.ui.leftWidth,
-	rightWidth: state.ui.rightWidth
+	handlerPos: state.ui.handlerPos,
+	isDragging: state.ui.isDragging
 });
 
 /*

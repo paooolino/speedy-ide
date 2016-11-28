@@ -1,1 +1,7 @@
+/* main containers */
 html, body, #rootElement{ height:100%; overflow:hidden;}
+
+/* Layout */
+.HeaderHeight{height:80px;}
+.ContentHeight{height:calc(100% - 80px);}
+.ResizeHandler{cursor:col-resize;width:1rem;margin-left:-0.5rem;}

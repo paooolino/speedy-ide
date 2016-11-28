@@ -10,27 +10,36 @@
 	action constants
 */
 
-const RESIZE_LAYOUT = 'ui/RESIZE_LAYOUT';
+const SET_HANDLER_POS = 'ui/SET_HANDLER_POS';
+const BEGIN_DRAG = 'ui/BEGIN_DRAG';
+const END_DRAG = 'ui/END_DRAG';
 
 /*
 	reducer
 */
 
 const initialState = {
-	headerHeight: 0,
-	contentHeight: 0,
-	leftWidth: 0,
-	rightWidth: 0
+	isDragging: false,
+	handlerPos: 20
 };
 
 export default (state=initialState, action) => {
 	switch(action.type) {
-		case RESIZE_LAYOUT:
+		case SET_HANDLER_POS:
 			return Object.assign({}, state, {
-				headerHeight: action.headerHeight,
-				contentHeight: action.contentHeight,
-				leftWidth: action.leftWidth,
-				rightWidth: action.rightWidth
+				handlerPos: action.handlerPos
+			});
+			break;
+			
+		case BEGIN_DRAG:
+			return Object.assign({}, state, {
+				isDragging: true
+			});
+			break;
+
+		case END_DRAG:
+			return Object.assign({}, state, {
+				isDragging: false
 			});
 			break;
 		
@@ -47,10 +56,15 @@ export default (state=initialState, action) => {
 	sync action creators
 */
 
-export const resize_layout = (headerHeight, contentHeight, leftWidth, rightWidth) => ({
-	type: RESIZE_LAYOUT,
-	headerHeight,
-	contentHeight,
-	leftWidth,
-	rightWidth
+export const set_handler_pos = (handlerPos) => ({
+	type: SET_HANDLER_POS,
+	handlerPos
+});
+
+export const begin_drag = () => ({
+	type: BEGIN_DRAG
+});
+
+export const end_drag = () => ({
+	type: END_DRAG
 });
