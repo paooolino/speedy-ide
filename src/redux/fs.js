@@ -48,12 +48,13 @@ export default (state=initialState, action) => {
 	async action creators
 */
 
-export const fetchdir = (server_path) => {
+export const fetchdir = (server_path, source_dir) => {
 	return (dispatch) => {
 		dispatch(fetchdir_request());
 		
 		const body_request = {
-			action: 'fetchdir'
+			action: 'fetchdir',
+			source_dir
 		};
 		return fetch(server_path, {
 			method: 'post',

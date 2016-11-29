@@ -28,7 +28,10 @@ class Layout extends Component {
 	}
 	
 	componentWillMount() {
-		this.props.fetchdir(this.props.appConfig.SERVER_PATH);
+		this.props.fetchdir(
+			this.props.appConfig.SERVER_PATH,
+			this.props.appConfig.SOURCE_DIR
+		);
 	}
 	
 	render() {
@@ -59,8 +62,8 @@ Layout.propTypes = {
 */
 
 const mapDispatchToProps = (dispatch) => ({
-	fetchdir: (server_path) => {
-		dispatch(actions_fs.fetchdir(server_path));
+	fetchdir: (server_path, source_dir) => {
+		dispatch(actions_fs.fetchdir(server_path, source_dir));
 	}
 });
 

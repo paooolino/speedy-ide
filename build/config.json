@@ -1,3 +1,4 @@
 {
-	"SERVER_PATH": "http://localhost:8081"
+	"SERVER_PATH": "http://localhost:8081",
+	"SOURCE_DIR": "root"
 }
