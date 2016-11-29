@@ -6,6 +6,8 @@
 	internal imports
 */
 
+import { ENDPOINT_HOST, ENDPOINT_PATH } from '../../config.js';
+
 /*
 	action constants
 */

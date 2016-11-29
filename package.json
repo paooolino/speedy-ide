@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "open": "node open.js & npm start",
+    "open": "concurrently \"node open.js\" \"npm start\" \"php -S localhost:8081 -t ./php\"",
     "start": "webpack-dev-server --inline --content-base build/ --history-api-fallback",
     "build": "webpack"
   },
@@ -39,12 +39,13 @@
     "babel-plugin-transform-object-rest-spread": "^6.19.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
+    "concurrently": "^3.1.0",
     "enzyme": "^2.6.0",
     "expect": "^1.20.2",
     "opn": "^4.0.2",
     "react-addons-test-utils": "^15.4.1",
+    "tachyons": "^4.5.5",
     "webpack": "^1.13.3",
-    "zombie": "^5.0.5",
-		"tachyons": "^4.5.5"
+    "zombie": "^5.0.5"
   }
 }
