@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 */
 
 import * as actions_fs from '../redux/fs';
+import * as actions_app from '../redux/app';
 
 /*
 	stateless component
@@ -27,7 +28,7 @@ class Layout extends Component {
 	}
 	
 	componentWillMount() {
-		this.props.fetchdir();
+		this.props.fetchdir(this.props.appConfig.SERVER_PATH);
 	}
 	
 	render() {
@@ -58,8 +59,8 @@ Layout.propTypes = {
 */
 
 const mapDispatchToProps = (dispatch) => ({
-	fetchdir: () => {
-		dispatch(actions_fs.fetchdir());
+	fetchdir: (server_path) => {
+		dispatch(actions_fs.fetchdir(server_path));
 	}
 });
 
@@ -68,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 */
 
 const mapStateToProps = (state) => ({
-
+	appConfig: state.app.config
 });
 
 /*

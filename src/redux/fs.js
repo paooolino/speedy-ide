@@ -6,8 +6,6 @@
 	internal imports
 */
 
-import { ENDPOINT_HOST, ENDPOINT_PATH } from '../../config.js';
-
 /*
 	action constants
 */
@@ -50,12 +48,16 @@ export default (state=initialState, action) => {
 	async action creators
 */
 
-export const fetchdir = () => {
+export const fetchdir = (server_path) => {
 	return (dispatch) => {
 		dispatch(fetchdir_request());
 		
-		return fetch(ENDPOINT_HOST + ENDPOINT_PATH, {
-			method: 'get'
+		const body_request = {
+			action: 'fetchdir'
+		};
+		return fetch(server_path, {
+			method: 'post',
+			body: JSON.stringify(body_request)
 		})
 		.then(response => response.json())
 		.then(json => {

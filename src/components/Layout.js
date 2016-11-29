@@ -15,6 +15,7 @@ import AceEditor from 'react-ace';
 	internal imports
 */
 
+import * as actions_app from '../redux/app';
 import * as actions_ui from '../redux/ui';
 import FileTree from './FileTree';
 
@@ -33,42 +34,51 @@ class Layout extends Component {
 		//##COMPONENT_WILL_RECEIVE_PROPS##
 	}
 	
+	componentWillMount() {
+		this.props.loadConfig();
+	}
+	
 	render() {
-		return (
-			<div id="Layout" className="h-100">
-				<div className="HeaderHeight bg-gray">
-				</div>
-				<div 
-					onMouseUp={this.props.end_drag}
-					onMouseLeave={this.props.end_drag}
-					onMouseMove={(evt) => {
-						if(this.props.isDragging) {
-							this.props.move_handler(evt.clientX);
-						}
-					}}
-					className="ContentHeight bg-light-gray"
-				>
-					<div className="fl h-100 br b--light-silver" style={{width: this.props.handlerPos + '%'}}>
-						<FileTree />
-					</div>
-					<div className="fl h-100 bl b--white" style={{width: (100 - this.props.handlerPos) + '%'}}>
-						<AceEditor
-							mode="html"
-							width="100%"
-							height="100%"
-							theme="github"
-							tabSize={2}
-						/>
+		if(this.props.appConfig) {
+			return (
+				<div id="Layout" className="h-100">
+				
+					<div className="HeaderHeight bg-gray">
 					</div>
 					<div 
-						onMouseDown={this.props.begin_drag} 
-						className="ResizeHandler absolute h-100" 
-						style={{left: this.props.handlerPos + '%'}}
+						onMouseUp={this.props.end_drag}
+						onMouseLeave={this.props.end_drag}
+						onMouseMove={(evt) => {
+							if(this.props.isDragging) {
+								this.props.move_handler(evt.clientX);
+							}
+						}}
+						className="ContentHeight bg-light-gray"
 					>
+						<div className="fl h-100 br b--light-silver" style={{width: this.props.handlerPos + '%'}}>
+							<FileTree />
+						</div>
+						<div className="fl h-100 bl b--white" style={{width: (100 - this.props.handlerPos) + '%'}}>
+							<AceEditor
+								mode="html"
+								width="100%"
+								height="100%"
+								theme="github"
+								tabSize={2}
+							/>
+						</div>
+						<div 
+							onMouseDown={this.props.begin_drag} 
+							className="ResizeHandler absolute h-100" 
+							style={{left: this.props.handlerPos + '%'}}
+						>
+						</div>
 					</div>
 				</div>
-			</div>
-		);
+			);
+		} else {
+			return <div>Loading config...</div>
+		}
 	}
 }
 
@@ -100,6 +110,9 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	move_handler: (posX) => {
 		dispatch(actions_ui.set_handler_pos((posX/window.innerWidth)*100));
+	},
+	loadConfig: () => {
+		dispatch(actions_app.loadconfig());
 	}
 });
 
@@ -109,7 +122,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
 	handlerPos: state.ui.handlerPos,
-	isDragging: state.ui.isDragging
+	isDragging: state.ui.isDragging,
+	appConfig: state.app.config
 });
 
 /*

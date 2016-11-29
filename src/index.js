@@ -7,8 +7,6 @@ import ReactDOM from 'react-dom';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
-import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 
 /*
@@ -16,8 +14,8 @@ import { reducer as formReducer } from 'redux-form';
 */
 
 import Layout from './components/Layout';
-import HomePage from './components/HomePage';
 import uiReducer from './redux/ui';
+import appReducer from './redux/app';
 
 /*
 	store creation
@@ -25,17 +23,11 @@ import uiReducer from './redux/ui';
 
 let store = createStore(combineReducers({
 	ui: uiReducer,
-	routing: routerReducer,
+	app: appReducer,
 	form: formReducer
-}), applyMiddleware(thunk, routerMiddleware(browserHistory)));
+}), applyMiddleware(thunk));
 
-//store.subscribe(() =>	console.log(store.getState().ui));
-
-/*
-	history <> store sync
-*/
-
-let history = syncHistoryWithStore(browserHistory, store);
+store.subscribe(() =>	console.log(store.getState().app));
 
 /*
 	App render
@@ -47,11 +39,7 @@ const checkLogin = (nextState, replace) => {
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history}>
-			<Route path="/" component={Layout} >
-				<IndexRoute component={HomePage} />
-			</Route>
-    </Router>
+		<Layout />
   </Provider>,
   document.querySelectorAll('#rootElement')[0]
 );
