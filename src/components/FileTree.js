@@ -9,8 +9,8 @@ import { connect } from 'react-redux';
 	internal imports
 */
 
+import TreeEntry from './TreeEntry';
 import * as actions_fs from '../redux/fs';
-import * as actions_app from '../redux/app';
 
 /*
 	stateless component
@@ -36,9 +36,7 @@ class Layout extends Component {
 	
 	render() {
 		return (
-			<div>
-				FileTree
-			</div>
+			<TreeEntry level={0} children={this.props.entries} name="root" />
 		);
 	}
 }
@@ -72,7 +70,8 @@ const mapDispatchToProps = (dispatch) => ({
 */
 
 const mapStateToProps = (state) => ({
-	appConfig: state.app.config
+	appConfig: state.app.config,
+	entries: state.fs.entries
 });
 
 /*

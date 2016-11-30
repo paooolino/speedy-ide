@@ -36,7 +36,7 @@ export default (state=initialState, action) => {
 
 		case FETCHDIR_SUCCESS:
 			return Object.assign({}, state, {
-				entries: action.json.entries
+				entries: action.json
 			})
 		
 		default:

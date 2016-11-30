@@ -14,8 +14,9 @@ import { reducer as formReducer } from 'redux-form';
 */
 
 import Layout from './components/Layout';
-import uiReducer from './redux/ui';
 import appReducer from './redux/app';
+import uiReducer from './redux/ui';
+import fsReducer from './redux/fs';
 
 /*
 	store creation
@@ -24,10 +25,11 @@ import appReducer from './redux/app';
 let store = createStore(combineReducers({
 	ui: uiReducer,
 	app: appReducer,
+	fs: fsReducer,
 	form: formReducer
 }), applyMiddleware(thunk));
 
-store.subscribe(() =>	console.log(store.getState().app));
+//store.subscribe(() =>	console.log(store.getState().fs));
 
 /*
 	App render
