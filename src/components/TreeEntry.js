@@ -16,7 +16,7 @@ const TreeEntry = (props) => (
 	<li>
 		{props.name}
 		{props.children && 
-			<ul>
+			<ul className="list pa1 pl3">
 				{props.children.map((entry, i) => {
 					return(
 						<TreeEntry level={props.level + 1} children={entry.children} name={entry.name} key={i} />

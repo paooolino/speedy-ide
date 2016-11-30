@@ -36,7 +36,9 @@ class Layout extends Component {
 	
 	render() {
 		return (
-			<TreeEntry level={0} children={this.props.entries} name="root" />
+			<ul className="list pl3">
+				<TreeEntry level={0} children={this.props.entries} name="root" />
+			</ul>
 		);
 	}
 }
