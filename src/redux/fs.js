@@ -15,6 +15,26 @@ const FETCHDIR_FAILURE = 'fs/FETCHDIR_FAILURE';
 const FETCHDIR_SUCCESS = 'fs/FETCHDIR_SUCCESS';
 
 /*
+	helper functions
+*/
+
+/**
+	Pure function to add booleans fields "selected", "expanded" to a JSON tree.
+	@param json_tree as an array of entries.
+	@return a new json tree with the boolean fields added
+*/
+const addUIFields = (json_tree) => {
+	return [...json_tree.map((entry) => {
+		return Object.assign(
+			{}, 
+			entry, 
+			{selected: false, expanded: false},
+			(entry.children ? addUIFields(entry.children) : {})
+		);
+	})];
+}
+
+/*
 	reducer
 */
 
@@ -62,7 +82,7 @@ export const fetchdir = (server_path, source_dir) => {
 		})
 		.then(response => response.json())
 		.then(json => {
-			dispatch(fetchdir_success(json));
+			dispatch(fetchdir_success(addUIFields(json)));
 		})
 		.catch(err => {
 			dispatch(fetchdir_failure(err.message));
