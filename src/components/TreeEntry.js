@@ -14,7 +14,7 @@ import React, {PropTypes} from 'react';
 
 const TreeEntry = (props) => (
 	<li>
-		<a style={{
+		<a onClick={() => props.click_handler(props)}  style={{
 				paddingLeft: props.level * 10
 			}} 
 			className="db pointer hover-bg-white bb b--black-20 lh-copy f6"
@@ -25,7 +25,7 @@ const TreeEntry = (props) => (
 			<ul className="list pa0 pl0">
 				{props.children.map((entry, i) => {
 					return(
-						<TreeEntry level={props.level + 1} children={entry.children} name={entry.name} key={i} />
+						<TreeEntry click_handler={props.click_handler} level={props.level + 1} children={entry.children} name={entry.name} key={i} />
 					)
 				})}
 			</ul>
@@ -45,7 +45,8 @@ const TreeEntry = (props) => (
 */
 
 TreeEntry.propTypes = {
-	level: PropTypes.number.isRequired
+	level: PropTypes.number.isRequired,
+	click_handler: PropTypes.func.isRequired
 }
 
 export default TreeEntry;

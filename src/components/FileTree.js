@@ -37,7 +37,7 @@ class Layout extends Component {
 	render() {
 		return (
 			<ul className="list pl0">
-				<TreeEntry level={0} children={this.props.entries} name="root" />
+				<TreeEntry click_handler={this.props.click_handler} level={0} children={this.props.entries} name="root" />
 			</ul>
 		);
 	}
@@ -64,6 +64,9 @@ Layout.propTypes = {
 const mapDispatchToProps = (dispatch) => ({
 	fetchdir: (server_path, source_dir) => {
 		dispatch(actions_fs.fetchdir(server_path, source_dir));
+	},
+	click_handler: (entry) => {
+		console.log(entry);
 	}
 });
 
