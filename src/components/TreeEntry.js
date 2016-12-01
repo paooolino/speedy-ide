@@ -17,7 +17,7 @@ const TreeEntry = (props) => (
 		<a onClick={() => props.click_handler(props)}  style={{
 				paddingLeft: props.level * 10
 			}} 
-			className="db pointer hover-bg-white bb b--black-20 lh-copy f6"
+			className={'db pointer hover-bg-white bb b--black-20 lh-copy f6' + ((props.selectedEntry==props.id) ? ' bg-light-yellow' : '')}
 		>
 			{props.name}
 		</a>
@@ -25,7 +25,7 @@ const TreeEntry = (props) => (
 			<ul className="list pa0 pl0">
 				{props.children.map((entry, i) => {
 					return(
-						<TreeEntry click_handler={props.click_handler} level={props.level + 1} children={entry.children} name={entry.name} key={i} />
+						<TreeEntry id={entry.id} selectedEntry={props.selectedEntry} click_handler={props.click_handler} level={props.level + 1} children={entry.children} name={entry.name} key={entry.id} />
 					)
 				})}
 			</ul>
@@ -46,7 +46,8 @@ const TreeEntry = (props) => (
 
 TreeEntry.propTypes = {
 	level: PropTypes.number.isRequired,
-	click_handler: PropTypes.func.isRequired
+	click_handler: PropTypes.func.isRequired,
+	selectedEntry: PropTypes.string.isRequired
 }
 
 export default TreeEntry;

@@ -13,6 +13,7 @@
 const FETCHDIR_REQUEST = 'fs/FETCHDIR_REQUEST';
 const FETCHDIR_FAILURE = 'fs/FETCHDIR_FAILURE';
 const FETCHDIR_SUCCESS = 'fs/FETCHDIR_SUCCESS';
+const SELECT_ENTRY = 'fs/SELECT_ENTRY';
 
 /*
 	helper functions
@@ -29,7 +30,7 @@ const addUIFields = (json_tree, id) => {
 		return Object.assign(
 			{},
 			entry,
-			{selected: false, expanded: false, id: next_id},
+			{expanded: false, id: next_id},
 			(entry.children ? {children: addUIFields(entry.children, next_id)} : {})
 		);
 	})];
@@ -40,19 +41,20 @@ const addUIFields = (json_tree, id) => {
 */
 
 const initialState = {
-	entries: []
+	entries: [],
+	selectedEntry: ''
 };
 
 export default (state=initialState, action) => {
 	switch(action.type) {
 		case FETCHDIR_REQUEST:
 			return Object.assign({}, state, {
-
+				// to do
 			})
 
 		case FETCHDIR_FAILURE:
 			return Object.assign({}, state, {
-
+				// to do
 			})
 
 		case FETCHDIR_SUCCESS:
@@ -60,6 +62,11 @@ export default (state=initialState, action) => {
 				entries: action.json
 			})
 		
+		case SELECT_ENTRY:
+			return Object.assign({}, state, {
+				selectedEntry: action.id
+			})
+			
 		default:
 			return state;
 	}
@@ -97,15 +104,18 @@ export const fetchdir = (server_path, source_dir) => {
 
 export const fetchdir_request = () => ({
 	type: FETCHDIR_REQUEST
-})
-
+});
 
 export const fetchdir_failure = () => ({
 	type: FETCHDIR_FAILURE
-})
-
+});
 
 export const fetchdir_success = (json) => ({
 	type: FETCHDIR_SUCCESS,
 	json
-})
+});
+
+export const select_entry = (id) => ({
+	type: SELECT_ENTRY,
+	id
+});
