@@ -14,9 +14,15 @@ import React, {PropTypes} from 'react';
 
 const TreeEntry = (props) => (
 	<li>
-		{props.name}
+		<a style={{
+				paddingLeft: props.level * 10
+			}} 
+			className="db pointer hover-bg-white bb b--black-20 lh-copy f6"
+		>
+			{props.name}
+		</a>
 		{props.children && 
-			<ul className="list pa1 pl3">
+			<ul className="list pa0 pl0">
 				{props.children.map((entry, i) => {
 					return(
 						<TreeEntry level={props.level + 1} children={entry.children} name={entry.name} key={i} />
