@@ -19,17 +19,18 @@ const FETCHDIR_SUCCESS = 'fs/FETCHDIR_SUCCESS';
 */
 
 /**
-	Pure function to add booleans fields "selected", "expanded" to a JSON tree.
+	Pure function to add UI fields to the JSON tree.
 	@param json_tree as an array of entries.
-	@return a new json tree with the boolean fields added
+	@return a new json tree with the UI fields added.
 */
-const addUIFields = (json_tree) => {
-	return [...json_tree.map((entry) => {
+const addUIFields = (json_tree, id) => {
+	return [...json_tree.map((entry, index) => {
+		const next_id = (id||0) + '' + index;
 		return Object.assign(
-			{}, 
-			entry, 
-			{selected: false, expanded: false},
-			(entry.children ? addUIFields(entry.children) : {})
+			{},
+			entry,
+			{selected: false, expanded: false, id: next_id},
+			(entry.children ? {children: addUIFields(entry.children, next_id)} : {})
 		);
 	})];
 }
