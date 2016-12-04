@@ -29,7 +29,7 @@ let store = createStore(combineReducers({
 	form: formReducer
 }), applyMiddleware(thunk));
 
-store.subscribe(() =>	console.log(store.getState().fs));
+//store.subscribe(() =>	console.log(store.getState().fs));
 
 /*
 	App render

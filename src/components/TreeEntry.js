@@ -25,7 +25,17 @@ const TreeEntry = (props) => (
 			<ul className="list pa0 pl0">
 				{props.children.map((entry, i) => {
 					return(
-						<TreeEntry id={entry.id} selectedEntry={props.selectedEntry} click_handler={props.click_handler} level={props.level + 1} children={entry.children} name={entry.name} key={entry.id} />
+						<TreeEntry 
+							appConfig={props.appConfig}
+							id={entry.id} 
+							selectedEntry={props.selectedEntry} 
+							click_handler={props.click_handler} 
+							level={props.level + 1} 
+							children={entry.children} 
+							name={entry.name} 
+							key={entry.id} 
+							filepath={entry.filepath}
+						/>
 					)
 				})}
 			</ul>

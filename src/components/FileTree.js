@@ -37,11 +37,12 @@ class Layout extends Component {
 	render() {
 		return (
 			<ul className="list pl0">
-				<TreeEntry 
+				<TreeEntry
+					appConfig={this.props.appConfig}
 					selectedEntry={this.props.selectedEntry} 
 					click_handler={this.props.click_handler} 
 					level={0} 
-					children={this.props.entries} 
+					children={this.props.entries}
 					name="root" 
 					id="0"
 				/>
@@ -74,6 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	click_handler: (entry) => {
 		dispatch(actions_fs.select_entry(entry.id));
+		dispatch(actions_fs.loadfile(entry.appConfig.SERVER_PATH, entry.filepath));
 	}
 });
 

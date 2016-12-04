@@ -65,6 +65,8 @@ class Layout extends Component {
 								height="100%"
 								theme="github"
 								tabSize={2}
+								value={this.props.loadedFileContent}
+								editorProps={{$blockScrolling: true}}
 							/>
 						</div>
 						<div 
@@ -123,7 +125,8 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
 	handlerPos: state.ui.handlerPos,
 	isDragging: state.ui.isDragging,
-	appConfig: state.app.config
+	appConfig: state.app.config,
+	loadedFileContent: state.fs.loadedFileContent
 });
 
 /*

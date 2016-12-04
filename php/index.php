@@ -3,17 +3,26 @@
 	
 	$POST = json_decode(file_get_contents("php://input"), true);
 	
-	if($POST["action"] == "fetchdir") {
-		
-		// create the root source dir folder, if not exists
-		if(!file_exists($POST["source_dir"])) {
-			mkdir($POST["source_dir"]);
-		}
-		
-		$filelist = getFileList($POST["source_dir"]);
-		
-		echo json_encode($filelist);
-		
+	switch($POST["action"]) {
+		case "fetchdir" :
+			// create the root source dir folder, if not exists
+			if(!file_exists($POST["source_dir"])) {
+				mkdir($POST["source_dir"]);
+			}
+			
+			$filelist = getFileList($POST["source_dir"]);
+			
+			echo json_encode($filelist);
+			
+			break;
+			
+		case "loadfile" :
+			
+			echo json_encode(array(
+				"content" => file_get_contents($POST["filepath"])
+			));
+			
+			break;
 	}
 
 /**
@@ -23,20 +32,23 @@
  *
  *	@return an array of entries. Each entry is an associative array containing "name" and optionally a "children" array of entries.
  */
-function getFileList($dir) {
+function getFileList($dir, $id="0") {
 	$filelist = [];
 	if($handle = opendir($dir)) {
-		while(false !== ($entry = readdir($handle))) {
-			if($entry != "." && $entry != "..") {
-				$filepath = $dir . "/" . $entry;
+		while(false !== ($filename = readdir($handle))) {
+			if($filename != "." && $filename != "..") {
+				$filepath = $dir . "/" . $filename;
+				$next_id = $id . count($filelist);
+				$entry = array(
+					"name" => $filename,
+					"expanded" => false,
+					"id" => $next_id,
+					"filepath" => $filepath
+				);
 				if(is_dir($filepath)) {
-					$filelist[] = array(
-						"name" => $entry,
-						"children" => getFileList($filepath)
-					);
-				} else {
-					$filelist[] = array("name" => $entry);
+					$entry["children"] = getFileList($filepath, $next_id);
 				}
+				$filelist[] = $entry;
 			}
 		}
 		closedir($handle);
