@@ -48,7 +48,7 @@ const addUIFields = (json_tree, id) => {
 
 const initialState = {
 	entries: [],
-	selectedEntry: '',
+	selectedEntry: {},
 	loadedFileContent: ''
 };
 
@@ -71,7 +71,10 @@ export default (state=initialState, action) => {
 		
 		case SELECT_ENTRY:
 			return Object.assign({}, state, {
-				selectedEntry: action.id
+				selectedEntry: {
+					id: action.entry.id,
+					hasChildren: !!action.entry.children
+				}
 			})
 			
 		case LOADFILE_R:
@@ -159,9 +162,9 @@ export const fetchdir_success = (json) => ({
 	json
 });
 
-export const select_entry = (id) => ({
+export const select_entry = (entry) => ({
 	type: SELECT_ENTRY,
-	id
+	entry
 });
 
 export const loadfile_r = () => ({

@@ -73,7 +73,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 		dispatch(actions_fs.fetchdir(server_path, source_dir));
 	},
 	click_handler: (entry) => {
-		dispatch(actions_fs.select_entry(entry.id));
+		dispatch(actions_fs.select_entry(entry));
 		dispatch(actions_fs.loadfile(ownProps.appConfig.SERVER_PATH, entry.filepath));
 	}
 });

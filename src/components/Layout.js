@@ -42,7 +42,6 @@ class Layout extends Component {
 		if(this.props.appConfig) {
 			return (
 				<div id="Layout" className="h-100">
-				
 					<div className="HeaderHeight bg-gray">
 					</div>
 					<div 
@@ -59,15 +58,17 @@ class Layout extends Component {
 							<FileTree appConfig={this.props.appConfig} />
 						</div>
 						<div className="fl h-100 bl b--white" style={{width: (100 - this.props.handlerPos) + '%'}}>
-							<AceEditor
-								mode="html"
-								width="100%"
-								height="100%"
-								theme="github"
-								tabSize={2}
-								value={this.props.loadedFileContent}
-								editorProps={{$blockScrolling: true}}
-							/>
+							{this.props.selectedEntry.hasChildren ? <div>Directory</div> :
+								<AceEditor
+									mode="html"
+									width="100%"
+									height="100%"
+									theme="github"
+									tabSize={2}
+									value={this.props.loadedFileContent}
+									editorProps={{$blockScrolling: true}}
+								/>
+							}
 						</div>
 						<div 
 							onMouseDown={this.props.begin_drag} 
@@ -126,7 +127,8 @@ const mapStateToProps = (state) => ({
 	handlerPos: state.ui.handlerPos,
 	isDragging: state.ui.isDragging,
 	appConfig: state.app.config,
-	loadedFileContent: state.fs.loadedFileContent
+	loadedFileContent: state.fs.loadedFileContent,
+	selectedEntry: state.fs.selectedEntry
 });
 
 /*
