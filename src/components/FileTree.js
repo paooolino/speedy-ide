@@ -38,7 +38,6 @@ class Layout extends Component {
 		return (
 			<ul className="list pl0">
 				<TreeEntry
-					appConfig={this.props.appConfig}
 					selectedEntry={this.props.selectedEntry} 
 					click_handler={this.props.click_handler} 
 					level={0} 
@@ -69,13 +68,13 @@ Layout.propTypes = {
 	dispatches
 */
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
 	fetchdir: (server_path, source_dir) => {
 		dispatch(actions_fs.fetchdir(server_path, source_dir));
 	},
 	click_handler: (entry) => {
 		dispatch(actions_fs.select_entry(entry.id));
-		dispatch(actions_fs.loadfile(entry.appConfig.SERVER_PATH, entry.filepath));
+		dispatch(actions_fs.loadfile(ownProps.appConfig.SERVER_PATH, entry.filepath));
 	}
 });
 
@@ -84,7 +83,6 @@ const mapDispatchToProps = (dispatch) => ({
 */
 
 const mapStateToProps = (state) => ({
-	appConfig: state.app.config,
 	entries: state.fs.entries,
 	selectedEntry: state.fs.selectedEntry
 });

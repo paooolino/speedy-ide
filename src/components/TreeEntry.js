@@ -25,8 +25,7 @@ const TreeEntry = (props) => (
 			<ul className="list pa0 pl0">
 				{props.children.map((entry, i) => {
 					return(
-						<TreeEntry 
-							appConfig={props.appConfig}
+						<TreeEntry
 							id={entry.id} 
 							selectedEntry={props.selectedEntry} 
 							click_handler={props.click_handler} 
