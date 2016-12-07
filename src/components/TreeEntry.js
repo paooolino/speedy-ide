@@ -19,7 +19,7 @@ const TreeEntry = (props) => (
 			}} 
 			className={'db pointer hover-bg-white bb b--black-20 lh-copy f6' + ((props.selectedEntry.id==props.id) ? ' bg-light-yellow' : '')}
 		>
-			{props.name}
+			{props.children ? <img src="assets/folder.gif" /> : <img src="assets/txt.gif" />} {props.name}
 		</a>
 		{props.children && 
 			<ul className="list pa0 pl0">

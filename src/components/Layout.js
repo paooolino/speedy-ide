@@ -56,10 +56,10 @@ class Layout extends Component {
 						className="ContentHeight bg-light-gray"
 					>
 						<div className="fl h-100 br b--light-silver" style={{width: this.props.handlerPos + '%'}}>
-							<FileTree appConfig={this.props.appConfig} />
+							<FileTree />
 						</div>
 						<div className="fl h-100 bl b--white" style={{width: (100 - this.props.handlerPos) + '%'}}>
-							{this.props.selectedEntry.hasChildren ? <div>Directory</div> :
+							{this.props.selectedEntry.hasChildren ? <div>{JSON.stringify(this.props.selectedEntry.children)}</div> :
 								<AceEditor
 									mode="html"
 									width="100%"

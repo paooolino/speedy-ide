@@ -77,7 +77,8 @@ export default (state=initialState, action) => {
 				selectedEntry: {
 					id: action.entry.id,
 					hasChildren: !!action.entry.children,
-					filepath: action.entry.filepath
+					filepath: action.entry.filepath,
+					children: action.entry.children ? [...action.entry.children] : []
 				}
 			})
 			

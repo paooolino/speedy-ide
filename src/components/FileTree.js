@@ -39,7 +39,7 @@ class Layout extends Component {
 			<ul className="list pl0">
 				<TreeEntry
 					selectedEntry={this.props.selectedEntry} 
-					click_handler={this.props.click_handler} 
+					click_handler={(entry) => {this.props.click_handler(this.props.appConfig.SERVER_PATH, entry);}} 
 					level={0} 
 					children={this.props.entries}
 					name="root" 
@@ -72,9 +72,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 	fetchdir: (server_path, source_dir) => {
 		dispatch(actions_fs.fetchdir(server_path, source_dir));
 	},
-	click_handler: (entry) => {
+	click_handler: (server_path, entry) => {
 		dispatch(actions_fs.select_entry(entry));
-		dispatch(actions_fs.loadfile(ownProps.appConfig.SERVER_PATH, entry.filepath));
+		dispatch(actions_fs.loadfile(server_path, entry.filepath));
 	}
 });
 
@@ -84,7 +84,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 const mapStateToProps = (state) => ({
 	entries: state.fs.entries,
-	selectedEntry: state.fs.selectedEntry
+	selectedEntry: state.fs.selectedEntry,
+	appConfig: state.app.config
 });
 
 /*
