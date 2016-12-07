@@ -23,6 +23,12 @@
 			));
 			
 			break;
+			
+		case "savefile" :
+			
+			echo json_encode(file_put_contents($POST["filepath"], $POST["newValue"]));
+			
+			break;
 	}
 
 /**

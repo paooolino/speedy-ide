@@ -17,6 +17,9 @@ const SELECT_ENTRY = 'fs/SELECT_ENTRY';
 const LOADFILE_R = 'fs/LOADFILE_R';
 const LOADFILE_F = 'fs/LOADFILE_F';
 const LOADFILE_S = 'fs/LOADFILE_S';
+const SAVEFILE_R = 'fs/SAVEFILE_R';
+const SAVEFILE_F = 'fs/SAVEFILE_F';
+const SAVEFILE_S = 'fs/SAVEFILE_S';
 
 /*
 	helper functions
@@ -73,7 +76,8 @@ export default (state=initialState, action) => {
 			return Object.assign({}, state, {
 				selectedEntry: {
 					id: action.entry.id,
-					hasChildren: !!action.entry.children
+					hasChildren: !!action.entry.children,
+					filepath: action.entry.filepath
 				}
 			})
 			
@@ -90,6 +94,21 @@ export default (state=initialState, action) => {
 		case LOADFILE_S:
 			return Object.assign({}, state, {
 				loadedFileContent: action.json.content
+			})
+			
+		case SAVEFILE_R:
+			return Object.assign({}, state, {
+				// to do
+			})
+
+		case SAVEFILE_F:
+			return Object.assign({}, state, {
+				// to do
+			})
+
+		case SAVEFILE_S:
+			return Object.assign({}, state, {
+				// to do
 			})
 			
 		default:
@@ -145,6 +164,30 @@ export const loadfile = (server_path, filepath) => {
 	}
 }
 
+export const savefile = (newValue, server_path, filepath) => {
+	return (dispatch) => {
+		dispatch(savefile_r());
+		
+		const body_request = {
+			action: 'savefile',
+			newValue,
+			filepath
+		};
+		return fetch(server_path, {
+			method: 'post',
+			body: JSON.stringify(body_request)
+		})
+		.then(response => response.json())
+		.then(json => {
+			dispatch(savefile_s(json));
+		})
+		.catch(err => {
+			dispatch(savefile_f(err.message));
+		});
+	}
+}
+
+
 /*
 	sync action creators
 */
@@ -179,3 +222,18 @@ export const loadfile_s = (json) => ({
 	type: LOADFILE_S,
 	json
 });
+
+export const savefile_r = () => ({
+	type: SAVEFILE_R
+});
+
+export const savefile_f = () => ({
+	type: SAVEFILE_F
+});
+
+export const savefile_s = (json) => ({
+	type: SAVEFILE_S,
+	json
+});
+
+

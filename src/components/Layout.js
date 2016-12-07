@@ -17,6 +17,7 @@ import AceEditor from 'react-ace';
 
 import * as actions_app from '../redux/app';
 import * as actions_ui from '../redux/ui';
+import * as actions_fs from '../redux/fs';
 import FileTree from './FileTree';
 
 /*
@@ -66,6 +67,7 @@ class Layout extends Component {
 									theme="github"
 									tabSize={2}
 									value={this.props.loadedFileContent}
+									onChange={(newValue)=>{this.props.onChange(newValue, this.props.appConfig.SERVER_PATH, this.props.selectedEntry.filepath);}}
 									editorProps={{$blockScrolling: true}}
 								/>
 							}
@@ -116,6 +118,9 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	loadConfig: () => {
 		dispatch(actions_app.loadconfig());
+	},
+	onChange: (newValue, server_path, filepath) => {
+		dispatch(actions_fs.savefile(newValue, server_path, filepath));
 	}
 });
 
