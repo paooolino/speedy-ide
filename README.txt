@@ -4,6 +4,10 @@ Usage
 Automatically start built-in php server & build & open browser tabs
 	npm run open
 	
+
+Testing
+	npm test
+	npm run test:watch
 	
 	
 # compile (dev mode)
