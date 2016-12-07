@@ -5,3 +5,5 @@ html, body, #rootElement{ height:100%; overflow:hidden;}
 .HeaderHeight{height:40px;}
 .ContentHeight{height:calc(100% - 40px);}
 .ResizeHandler{cursor:col-resize;width:1rem;margin-left:-0.5rem;}
+
+/* FileManager */

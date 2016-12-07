@@ -19,6 +19,7 @@ import * as actions_app from '../redux/app';
 import * as actions_ui from '../redux/ui';
 import * as actions_fs from '../redux/fs';
 import FileTree from './FileTree';
+import FileManager from './FileManager';
 
 /*
 	stateless component
@@ -59,7 +60,7 @@ class Layout extends Component {
 							<FileTree />
 						</div>
 						<div className="fl h-100 bl b--white" style={{width: (100 - this.props.handlerPos) + '%'}}>
-							{this.props.selectedEntry.hasChildren ? <div>{JSON.stringify(this.props.selectedEntry.children)}</div> :
+							{this.props.selectedEntry.hasChildren ? <FileManager children={this.props.selectedEntry.children} /> :
 								<AceEditor
 									mode="html"
 									width="100%"
