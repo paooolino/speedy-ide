@@ -13,7 +13,7 @@ import { reducer as formReducer } from 'redux-form';
 	internal imports
 */
 
-import Layout from './components/Layout';
+import App from './components/App';
 import appReducer from './redux/app';
 import uiReducer from './redux/ui';
 import fsReducer from './redux/fs';
@@ -41,7 +41,7 @@ const checkLogin = (nextState, replace) => {
 
 ReactDOM.render(
   <Provider store={store}>
-		<Layout />
+		<App />
   </Provider>,
   document.querySelectorAll('#rootElement')[0]
 );
