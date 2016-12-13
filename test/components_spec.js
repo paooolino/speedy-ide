@@ -8,7 +8,12 @@ import Layout from '../src/components/Layout';
 
 describe('[Component] Layout', () => {
 	it('just renders', () => {
-		const wrapper = shallow(<Layout />);
+		const wrapper = shallow(
+			<Layout
+				handlerPos={20}
+				beginDrag={}
+			/>
+		);
 		expect(wrapper.find('#Layout').length).toBe(1);
 	});
 });

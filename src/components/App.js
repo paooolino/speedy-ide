@@ -4,7 +4,14 @@ import Layout from './Layout';
 
 class App extends Component {
 	render() {
-		return(<Layout />);
+		return(
+			<Layout 
+				handlerPos={20}
+				beginDrag={(evt)=>{
+					console.log('beginDrag');
+				}}
+			/>
+		);
 	}
 }
 
