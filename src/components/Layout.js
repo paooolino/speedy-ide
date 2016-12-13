@@ -27,7 +27,7 @@ import FileManager from './FileManager';
 
 //##COMPONENT_HELPERFUNCTIONS##
 
-class Layout extends Component {
+export class Layout extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -83,7 +83,7 @@ class Layout extends Component {
 				</div>
 			);
 		} else {
-			return <div>Loading config...</div>
+			return <div className="loading_message">Loading config...</div>
 		}
 	}
 }
@@ -100,6 +100,7 @@ class Layout extends Component {
 */
 
 Layout.propTypes = {
+	loadConfig: PropTypes.func.isRequired
 }
 
 /*
