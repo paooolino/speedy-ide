@@ -10,6 +10,7 @@ class FileTree extends Component {
 		return (
 			<ul className="list pa0 pl0">
 				{this.props.nodes.map((entry, i) => {
+					//console.log(entry.id);
 					return (
 						<li key={entry.id}>
 							<a className="db pointer hover-bg-white bb b--black-20 lh-copy f6"
@@ -29,6 +30,7 @@ class FileTree extends Component {
 };
 
 FileTree.propTypes = {
+	nodes: PropTypes.array.isRequired
 };
 
 export default FileTree;

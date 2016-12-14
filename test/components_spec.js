@@ -5,6 +5,7 @@ import { shallow } from 'enzyme';
 import expect from 'expect';
 
 import Layout from '../src/components/Layout';
+import FileTree from '../src/components/FileTree';
 
 describe('[Component] Layout', () => {
 	
@@ -18,6 +19,43 @@ describe('[Component] Layout', () => {
 	});
 	
 	xit('renders content in header', () => {});
+	
 	xit('renders content in left column', () => {});
+	
 	xit('renders content in right column', () => {});
+	
+});
+
+describe('[Component] FileTree', () => {
+	
+	it('just renders', () => {
+		const nodes = [{
+			id: 1,
+			name: "root"
+		}];
+		const wrapper = shallow(
+			<FileTree 
+				nodes={nodes}
+			/>
+		);
+		expect(wrapper.find('ul').length).toBe(1);
+	});
+	
+	it('render childrens', () => {
+		const nodes = [{
+			id: 1,
+			name: "root",
+			children: [{
+				id: 2,
+				name: "children"
+			}]
+		}];
+		const wrapper = shallow(
+			<FileTree 
+				nodes={nodes}
+			/>
+		);
+		expect(wrapper.find(FileTree).length).toBe(1);
+	});
+	
 });
