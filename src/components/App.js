@@ -7,9 +7,7 @@ class App extends Component {
 		return(
 			<Layout 
 				handlerPos={20}
-				beginDrag={(evt)=>{
-					console.log('beginDrag');
-				}}
+				contentHeader={<span>Speedy</span>}
 			/>
 		);
 	}

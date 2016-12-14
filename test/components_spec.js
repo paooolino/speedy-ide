@@ -7,13 +7,17 @@ import expect from 'expect';
 import Layout from '../src/components/Layout';
 
 describe('[Component] Layout', () => {
+	
 	it('just renders', () => {
 		const wrapper = shallow(
 			<Layout
 				handlerPos={20}
-				beginDrag={}
 			/>
 		);
 		expect(wrapper.find('#Layout').length).toBe(1);
 	});
+	
+	xit('renders content in header', () => {});
+	xit('renders content in left column', () => {});
+	xit('renders content in right column', () => {});
 });
