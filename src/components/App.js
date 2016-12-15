@@ -24,6 +24,13 @@ const nodes = [
 				name: "file4"
 			}]
 		}]
+	}, {
+		id: 7,
+		name: "root2",
+		children: [{
+			id: 8,
+			name: "children2"
+		}]
 	}
 ];
 
