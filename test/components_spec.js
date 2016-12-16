@@ -39,25 +39,43 @@ describe('[Component] Layout', () => {
 
 describe('[Component] FileTree', () => {
 	
-	const nodes = [{
-		id: 1,
-		name: "root",
-		children: [{
-			id: 2,
-			name: "children"
-		}]
-	}];
+	const onClickFolderfSpy = expect.createSpy();
+	const onClickLeafSpy = expect.createSpy();
+	
+	const nodes = [
+		{
+			id: 1,
+			name: "an initially opened folder",
+			children: [{
+				id: 2,
+				name: "first level leaf"
+			}]
+		}, {
+			id: 3,
+			name: "an initially closed folder",
+			children: [{
+				id: 4,
+				name: "first level leaf"
+			}]
+		}, {
+			id: 5,
+			name: "selected top level leaf"
+		}, {
+			id: 6,
+			name: "selected top level leaf"
+		}, {
+			id: 7,
+			name: "unselected top level leaf"
+		}
+	];
 
 	const wrapper = shallow(
 		<FileTree 
 			nodes={nodes}
-		/>
-	);
-	
-	const wrapper_i = shallow(
-		<FileTree
-			isOpened={false}
-			nodes={nodes}
+			openedFolders={[1]}
+			selectedLeaves={[5, 6]}
+			onClickLeaf={onClickLeafSpy}
+			onClickFolder={onClickFolderfSpy}
 		/>
 	);
 		
@@ -66,26 +84,35 @@ describe('[Component] FileTree', () => {
 	});
 	
 	it('render childrens', () => {
-		expect(wrapper.find(FileTree).length).toBe(1);
+		expect(wrapper.find(FileTree).length).toBe(2);
 	});
 	
-	it('is visible by default', () => {
-		expect(wrapper.find('ul').hasClass('dn')).toBe(false);
+	it('distinguishes between folders and leaves', () => {
+		expect(wrapper.find('li').at(0).hasClass('is_folder')).toBe(true);
+		expect(wrapper.find('li').at(2).hasClass('is_folder')).toBe(false);
 	});
 	
-	it('renders an invisible tree', () => {
-		expect(wrapper_i.find('ul').hasClass('dn')).toBe(true);
+	it('renders opened folders', () => {
+		expect(wrapper.find('li').at(0).hasClass('opened')).toBe(true);
+		expect(wrapper.find('li').at(1).hasClass('opened')).toBe(false);
 	});
 	
-	it('children visibility is false by default', ()=>{
-		expect(wrapper.find(FileTree).prop('isOpened')).toBe(false);
-	}); 
+	it('renders selected leaves', () => {
+		expect(wrapper.find('li').at(2).hasClass('selected')).toBe(true);
+		expect(wrapper.find('li').at(3).hasClass('selected')).toBe(true);
+		expect(wrapper.find('li').at(4).hasClass('selected')).toBe(false);
+	});
 	
-	it('children visibility toggles with a click', ()=>{
-		wrapper.find('a').simulate('click');
-		expect(wrapper.find(FileTree).prop('isOpened')).toBe(true);
-		wrapper.find('a').simulate('click');
-		expect(wrapper.find(FileTree).prop('isOpened')).toBe(false);
-	}); 
+	it('calls an handler when clicking a folder', () => {
+		wrapper.find('a').at(1).simulate('click');
+		expect(onClickFolderfSpy).toHaveBeenCalled();
+		expect(onClickFolderfSpy.calls[0].arguments.length).toBe(2);
+	});
 	
+	it('calls an handler when clicking a leaf', () => {
+		wrapper.find('a').at(3).simulate('click');
+		expect(onClickLeafSpy).toHaveBeenCalled();
+		expect(onClickLeafSpy.calls[0].arguments.length).toBe(2);
+	});
+
 });

@@ -7,3 +7,6 @@ html, body, #rootElement{ height:100%; overflow:hidden;}
 .ResizeHandler{cursor:col-resize;width:1rem;margin-left:-0.5rem;}
 
 /* FileTree */
+.is_folder > ul {display:none;}
+.is_folder.opened > ul {display:block;}
+li.selected > a{background-color:#ffa;}

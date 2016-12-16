@@ -40,7 +40,17 @@ class App extends Component {
 			<Layout 
 				handlerPos={15}
 				contentHeader={<span>Speedy</span>}
-				contentLeft={<FileTree nodes={nodes} />}
+				contentLeft={<FileTree 
+					nodes={nodes}
+					openedFolders={[1,4,7]}
+					selectedLeaves={[8]}
+					onClickLeaf={(evt, entry)=>{
+						console.log(entry);
+					}}		
+					onClickFolder={(evt, entry)=>{
+						console.log(entry);
+					}}					
+				/>}
 			/>
 		);
 	}
