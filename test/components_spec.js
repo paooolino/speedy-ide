@@ -39,52 +39,53 @@ describe('[Component] Layout', () => {
 
 describe('[Component] FileTree', () => {
 	
+	const nodes = [{
+		id: 1,
+		name: "root",
+		children: [{
+			id: 2,
+			name: "children"
+		}]
+	}];
+
+	const wrapper = shallow(
+		<FileTree 
+			nodes={nodes}
+		/>
+	);
+	
+	const wrapper_i = shallow(
+		<FileTree
+			isOpened={false}
+			nodes={nodes}
+		/>
+	);
+		
 	it('just renders', () => {
-		const nodes = [{
-			id: 1,
-			name: "root"
-		}];
-		const wrapper = shallow(
-			<FileTree 
-				nodes={nodes}
-			/>
-		);
 		expect(wrapper.find('ul').length).toBe(1);
 	});
 	
 	it('render childrens', () => {
-		const nodes = [{
-			id: 1,
-			name: "root",
-			children: [{
-				id: 2,
-				name: "children"
-			}]
-		}];
-		const wrapper = shallow(
-			<FileTree 
-				nodes={nodes}
-			/>
-		);
 		expect(wrapper.find(FileTree).length).toBe(1);
 	});
 	
-	it('is initially closed, toggles on click', () => {
-		const nodes = [{
-			id: 1,
-			name: "root"
-		}];
-		const wrapper = shallow(
-			<FileTree 
-				nodes={nodes}
-			/>
-		);
-		expect(wrapper.find('li').hasClass('closed')).toBe(true);
-		/*wrapper.find('li').simulate('click');
-		expect(wrapper.find('ul').hasClass('closed')).toBe(false);
-		wrapper.find('li').simulate('click');
-		expect(wrapper.find('li').hasClass('closed')).toBe(true);
-		*/
+	it('is visible by default', () => {
+		expect(wrapper.find('ul').hasClass('dn')).toBe(false);
 	});
+	
+	it('renders an invisible tree', () => {
+		expect(wrapper_i.find('ul').hasClass('dn')).toBe(true);
+	});
+	
+	it('children visibility is false by default', ()=>{
+		expect(wrapper.find(FileTree).prop('isOpened')).toBe(false);
+	}); 
+	
+	it('children visibility toggles with a click', ()=>{
+		wrapper.find('a').simulate('click');
+		expect(wrapper.find(FileTree).prop('isOpened')).toBe(true);
+		wrapper.find('a').simulate('click');
+		expect(wrapper.find(FileTree).prop('isOpened')).toBe(false);
+	}); 
 	
 });
