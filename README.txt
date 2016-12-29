@@ -1,34 +1,35 @@
-Usage
+USAGE
 ======
-
-Automatically start built-in php server & build & open browser tabs
-	npm run open
+npm run open
+	Starts webpack-dev-server & open the app in the browser.
 	
-
-Testing
-	npm test
-	npm run test:watch
+npm start
+	Starts webpack-dev-server without opening browser tabs.
 	
-	
-# compile (dev mode)
-npm run compileAll
-
-# build the react App and outputs the build/bundle.js file
 npm run build
+	Builds the app with webpack.
 
-# compile the php App and outputs the dist/speedy.php file
-npm run compile
+GLOBAL DEPENDENCIES
+====================
+npm install -g webpack
+npm install -g webpack-dev-server
 
-TO stop builtin php server if processes are pending:
-	1) get the PID (please kill the win PID)
-		ps
-	2) kill the PID
-		kill -9 <pid>
+NPM PACKAGES
+=============
+PRODUCTION:
+react, react-dom
+  The ReactJS library.
 
-Built-in server: http://localhost:8081/
-		
-Only build
-	npm start
+DEV:
+babel-loader, babel-core
+  Use babel with webpack
+
+babel-preset-react, babel-preset-es2015
+  Presets for translating JSX and es2015 features
+
+concurrently
+	Used to allow parallel execution of multiple npm scripts at once.
 	
-
-
+opn
+	Used to automatically open the browser in node scripts.
+	
