@@ -4,6 +4,7 @@ import Layout from './Layout';
 import FileTree from './FileTree';
 
 class App extends Component {
+
 	constructor(props) {
 		super(props);
 		this.state = {

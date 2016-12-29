@@ -9,4 +9,4 @@ html, body, #rootElement{ height:100%; overflow:hidden;}
 /* FileTree */
 .is_folder > ul {display:none;}
 .is_folder.opened > ul {display:block;}
-li.selected > a{background-color:#ffa;}
+li.selected > a{background-color:#ffa !important;}
