@@ -10,9 +10,11 @@ class Dialog extends Component {
 			<div className="DialogContainer">
 				<div className="DialogInner">
 					<div className="DialogContent">
+						{this.props.content}
 					</div>
 					<div className="DialogBar">
-						<button>Cancel</button><button>OK</button>
+						<button onClick={this.props.onCancel}>Cancel</button>
+						<button onClick={this.props.onOk}>OK</button>
 					</div>
 				</div>
 			</div>
@@ -21,6 +23,8 @@ class Dialog extends Component {
 }
 
 Dialog.propTypes = {
+	onCancel: PropTypes.func.isRequired,
+	onOk: PropTypes.func.isRequired
 };
 
 export default Dialog;

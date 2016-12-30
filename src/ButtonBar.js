@@ -7,11 +7,11 @@ class ButtonBar extends Component {
 	
 	render() {
 		return (
-			<div className="ButtonBarContainer">
+			<div className="ButtonBarContainer fl mr3">
 				{
 					this.props.buttons.map((entry, i) => {
 						return (
-							<button key={i}>{entry.name}</button>
+							<button onClick={entry.callback} key={i}>{entry.name}</button>
 						);
 					})
 				}
