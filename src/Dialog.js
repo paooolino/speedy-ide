@@ -7,8 +7,8 @@ class Dialog extends Component {
 	
 	render() {
 		return (
-			<div className="DialogContainer">
-				<div className="DialogInner">
+			<div className="DialogContainer fixed top-0 left-0 w-100 h-100 bg-white-70">
+				<div className="DialogInner pa5 tc">
 					<div className="DialogContent">
 						{this.props.content}
 					</div>

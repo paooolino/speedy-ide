@@ -11,7 +11,13 @@ class ButtonBar extends Component {
 				{
 					this.props.buttons.map((entry, i) => {
 						return (
-							<button onClick={entry.callback} key={i}>{entry.name}</button>
+							<button 
+								onClick={entry.callback} 
+								key={i}
+								disabled={entry.enabled ? '' : 'disabled'}
+								>
+								{entry.name}
+							</button>
 						);
 					})
 				}

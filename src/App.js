@@ -15,6 +15,8 @@ import FileTree from './FileTree';
 /*
 	component definition
 */
+const PROJECT_MODE = 'PROJECT_MODE';
+
 class App extends Component {
 	
 	constructor(props) {
@@ -22,7 +24,9 @@ class App extends Component {
 		this.state = {
 			newProjectPopupVisible: false,
 			newProjectName: '',
-			projectsList: []
+			projectsList: [],
+			currentMode: '',
+			openedProject: {}
 		};
 	}
 	
@@ -48,6 +52,20 @@ class App extends Component {
 		});
 	}
 	
+	openProject(evt, entry) {
+		this.setState({
+			openedProject: Object.assign({}, entry),
+			currentMode: PROJECT_MODE
+		});
+	}
+	
+	closeProject() {
+		this.setState({
+			openedProject: {},
+			currentMode: ''
+		});
+	}
+	
 	createNewProject() {
 		this.setState({
 			newProjectPopupVisible: false,
@@ -61,7 +79,7 @@ class App extends Component {
 	
 	render() {
 		return (
-			<div>
+			<div className="h-100">
 				<Layout 
 					handlerPos={15}
 					contentHeader={
@@ -69,9 +87,12 @@ class App extends Component {
 							<ButtonBar 
 								buttons={[{
 									name: "New project",
-									callback: this.showNewProjectPopup.bind(this)
+									callback: this.showNewProjectPopup.bind(this),
+									enabled: (this.state.currentMode == '') ? true : false
 								},{
-									name: "Close project"
+									name: "Close project",
+									callback: this.closeProject.bind(this),
+									enabled: (this.state.currentMode == PROJECT_MODE) ? true : false
 								}]}
 							/>
 							<ButtonBar 
@@ -90,9 +111,31 @@ class App extends Component {
 							/>
 						</div>
 					}
-					contentLeft={<FileTree 
-						nodes={this.state.projectsList}
-					/>}
+					contentLeft={(() => {
+						switch(this.state.currentMode) {
+							case '':
+								return (
+									<div>
+										<p>Projects List</p>
+										<FileTree 
+											title="Project list"
+											nodes={this.state.projectsList}
+											onClickLeaf={this.openProject.bind(this)}
+										/>
+									</div>
+								);
+							case PROJECT_MODE:
+								return (
+									<div>
+										<p>{this.state.openedProject.name}</p>
+										<FileTree 
+											nodes={[]}
+										/>
+									</div>
+								);
+						}
+					})()}
+					contentRight={<div>right</div>}
 				/>
 				{this.state.newProjectPopupVisible &&
 					<Dialog 
