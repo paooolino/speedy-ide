@@ -13,7 +13,9 @@ class Dialog extends Component {
 						{this.props.content}
 					</div>
 					<div className="DialogBar">
-						<button onClick={this.props.onCancel}>Cancel</button>
+						{this.props.onCancel &&
+							<button onClick={this.props.onCancel}>Cancel</button>
+						}
 						<button onClick={this.props.onOk}>OK</button>
 					</div>
 				</div>
@@ -23,8 +25,8 @@ class Dialog extends Component {
 }
 
 Dialog.propTypes = {
-	onCancel: PropTypes.func.isRequired,
-	onOk: PropTypes.func.isRequired
+	onCancel: PropTypes.func,
+	onOk: PropTypes.func
 };
 
 export default Dialog;

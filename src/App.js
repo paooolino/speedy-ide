@@ -26,7 +26,9 @@ class App extends Component {
 			newProjectName: '',
 			projectsList: [],
 			currentMode: '',
-			openedProject: {}
+			openedProject: {},
+			visibleError: '',
+			isFetching: false
 		};
 	}
 	
@@ -52,10 +54,32 @@ class App extends Component {
 		});
 	}
 	
-	openProject(evt, entry) {
+	hideError() {
 		this.setState({
-			openedProject: Object.assign({}, entry),
-			currentMode: PROJECT_MODE
+			visibleError: ''
+		});
+	}
+	
+	openProject(evt, entry) {
+		const obj = this;
+		
+		this.setState({
+			isFetching: true
+		});
+		
+		fetch('http://localhost:8081/?action=openProject&name=' + entry.name, {
+			method: 'get'
+		}).then(function(response) {
+			obj.setState({
+				openedProject: Object.assign({}, entry),
+				currentMode: PROJECT_MODE,
+				isFetching: false
+			});
+		}).catch(function(err) {
+			obj.setState({
+				visibleError: 'Failed opening project.',
+				isFetching: false
+			});
 		});
 	}
 	
@@ -129,7 +153,7 @@ class App extends Component {
 									<div>
 										<p>{this.state.openedProject.name}</p>
 										<FileTree 
-											nodes={[]}
+											nodes={this.state.openedProject.nodes}
 										/>
 									</div>
 								);
@@ -152,6 +176,29 @@ class App extends Component {
 						}
 						onCancel={this.hideNewProjectPopup.bind(this)}
 						onOk={this.createNewProject.bind(this)}
+					/>
+				}
+				
+				{this.state.visibleError != '' &&
+					<Dialog 
+						name="errorPopup"
+						content={
+							<div>
+								{this.state.visibleError}
+							</div>
+						}
+						onOk={this.hideError.bind(this)}
+					/>
+				}
+				
+				{this.state.isFetching &&
+					<Dialog 
+						name="fetchingPopup"
+						content={
+							<div>
+								loading data...
+							</div>
+						}
 					/>
 				}
 			</div>
