@@ -67,7 +67,7 @@ class App extends Component {
 			isFetching: true
 		});
 		
-		fetch('http://localhost:8081/?action=openProject&name=' + entry.name, {
+		fetch('http://localhost:8081/?action=openProject&path=' + entry.name, {
 			method: 'get'
 		}).then(function(response) {
 			obj.setState({
