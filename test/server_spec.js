@@ -3,17 +3,24 @@ import request from 'request';
 import fs from 'fs';
 import http from 'http';
 
+import server from '../server';
+
+const config = require('../config.js');
+const API_ENDPOINT = config.SERVER_HOST + ':' + config.SERVER_PORT; 
+
 describe('Servet test', () => {
-	
-	let server;
-	
+
+	/**
+	 *	setup/teardown
+	 */	
+	 
 	before(() => {
-		const path = __dirname + '/tmp/';
+		const path = __dirname + '/tmp';
 		fs.mkdirSync(path);
-		fs.writeFileSync(path + 'file1.txt', 'file1');
-		fs.writeFileSync(path + 'file2.txt', 'file2');
-		fs.mkdirSync(path + 'dir');
-		fs.writeFileSync(path + 'dir/file3.txt', 'file3');
+		fs.writeFileSync(path + '/file1.txt', 'file1');
+		fs.writeFileSync(path + '/file2.txt', 'file2');
+		fs.mkdirSync(path + '/dir');
+		fs.writeFileSync(path + '/dir/file3.txt', 'file3');
 	});
 	
 	after(() => {
@@ -23,38 +30,74 @@ describe('Servet test', () => {
 		fs.unlinkSync(path + '/dir/file3.txt');
 		fs.rmdirSync(path + '/dir');
 		fs.rmdirSync(path);
+
+		server.close();
 	});
 	
-  beforeEach(() => {
-    server = require('../server');
-  });
-	
-  afterEach(() => {
-    server.close();
-  });
-	
-	/*
-	it('sends CORS header', (done) => {
-		http.get('http://localhost:8081/', (res) => {
-			console.log(res.getHeader('Access-Control-Allow-Origin'));
-			expect(res.getHeader('Access-Control-Allow-Origin')).toBe('*');
+	/**
+	 *	tests
+	 */
+	 
+	it('sends CORS header for GET requests', (done) => {
+		request.get(API_ENDPOINT, (error, response, body) => {
+			expect(response.headers['access-control-allow-origin']).toBe('*');
 			done();
 		});
 	});
-	*/
 	
-	it('returns a list of items', (done) => {
-		http.get('http://localhost:8081/?action=openProject&path=/speedy-ide/test/tmp/', (res) => {
-			res.on('data', (chunk) => {
-				const json = JSON.parse(chunk);
-				expect(json.length).toBe(3);
-				expect(json.filter((entry) => {
-					return entry.name == 'dir' && entry.isDirectory
-				}).length).toBe(1);
-				
+	it('sends CORS header for POST requests', (done) => {
+		request.post({url: API_ENDPOINT}, (error, response, body) => {
+			expect(response.headers['access-control-allow-origin']).toBe('*');
+			done();
+		});
+	});
+
+	it('list the content of a directory', (done) => {
+		/**
+		 *	@param action The action name
+		 *	@param path The relative path with trailing slash
+		 */
+		request.get(API_ENDPOINT + '/?action=listFiles&path=speedy-ide/test/tmp/', (error, response, body) => {
+			const json = JSON.parse(body);
+			const expectedNames = ['dir', 'file1.txt', 'file2.txt'];
+			const expectedDirs = [true, false, false];
+			expect(expectedNames).toEqual(json.map((entry) => entry.name));
+			expect(expectedDirs).toEqual(json.map((entry) => entry.isDirectory));
+			done(); 
+		});
+	});
+	
+	it('loads a file', (done) => {
+		/**
+		 *	@param action The action name
+		 *	@param filename The relative path to file
+		 */
+		request.get(API_ENDPOINT + '/?action=openFile&path=speedy-ide/test/tmp/file1.txt', (error, response, body) => {
+			expect(body).toBe('file1');
+			done();
+		});
+	});
+	
+	it('saves a file', (done) => {
+		/**
+		 *	@param action The action name
+		 *	@param filename The relative path to file
+		 *	@param content The content to be written in the file
+		 */
+		const data = {
+			action: 'saveFile',
+			filename: 'speedy-ide/test/tmp/file1.txt',
+			content: 'saved content'
+		};
+		request.post({
+			url: API_ENDPOINT,
+			form: data
+		}, (error, response, body) => {
+			expect(response.statusCode).toBe(200);
+			request.get(API_ENDPOINT + '/?action=openFile&path=speedy-ide/test/tmp/file1.txt', (error, response, body) => {
+				expect(body).toBe('saved content');
 				done();
 			});
 		});
 	});
-	
 });

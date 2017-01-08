@@ -22,10 +22,12 @@
   },
   "homepage": "https://github.com/paooolino/speedy-ide#readme",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "directory-tree": "^1.2.0",
     "express": "^4.14.0",
     "react": "^15.4.1",
-    "react-dom": "^15.4.1"
+    "react-dom": "^15.4.1",
+    "request": "^2.79.0"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
