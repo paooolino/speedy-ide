@@ -41,7 +41,7 @@ FileTree.propTypes = {
 		id: PropTypes.string.isRequired,
 		name: PropTypes.string.isRequired,
 		children: PropTypes.array
-  })),
+  })).isRequired,
 	openedFolders: PropTypes.array,
 	selectedLeaves: PropTypes.array,
 	onClickLeaf: PropTypes.func,
