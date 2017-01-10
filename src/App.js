@@ -25,18 +25,38 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			currentPath: '',
+			openedFolders: [],
+			nodes: []
 		};
 	}
 	
 	componentWillMount() {
-		/*
-		const the_path = path.join(config.PROJECT_ROOT);
+		this.fetchData();
+	}
+	
+	fetchData() {
+		const the_path = path.join(config.PROJECT_ROOT, this.state.currentPath);
 		fetch(API_ENDPOINT + '/?action=listFiles&path=' + the_path)
 			.then((response) => response.json())
 			.then((json) => {
-				console.log(json);
+				this.setState({
+					nodes: this.normalizeNodes(json)
+				});
 			});
-		*/
+	}
+	
+	normalizeNodes(json) {
+		return json.map((entry) => {
+			const item = {
+				id: entry.name,
+				name: entry.name
+			}
+			if (entry.isDirectory) {
+				item.children = [];
+			}
+			return item;
+		});
 	}
 	
 	render() {
@@ -45,9 +65,11 @@ class App extends Component {
 				<Layout
 					handlerPos={15}
 					contentLeft={
-						<FileTree 
-							nodes={[{}]}
-						/>
+						<div className="h-100 overflow-container">
+							<FileTree 
+								nodes={this.state.nodes}
+							/>
+						</div>
 					}
 				/>
 			</div>

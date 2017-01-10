@@ -4,7 +4,7 @@ html, body, #rootElement{ height:100%; overflow:hidden;}
 /* Layout */
 .HeaderHeight{height:40px;}
 .ContentHeight{height:calc(100% - 40px);}
-.ResizeHandler{cursor:col-resize;width:1rem;margin-left:-0.5rem;}
+.ResizeHandler{cursor:col-resize;width:0.5rem;margin-left:-0.25rem;}
 
 /* FileTree */
 .is_folder > ul {display:none;}
