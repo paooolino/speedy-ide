@@ -6,8 +6,8 @@
   "scripts": {
     "test": "mocha --compilers js:babel-register --recursive",
     "test:watch": "npm test -- --watch",
-    "open": "concurrently \"node server.js\" \"node open.js\" \"npm start\"",
-    "start": "concurrently \"node server.js\" \"webpack-dev-server --inline --content-base build/ --history-api-fallback\"",
+		"start": "concurrently \"node server.js\" \"webpack-dev-server --inline --content-base build/ --history-api-fallback\"",
+    "open": "concurrently \"node open.js\" \"npm start\"",
     "build": "webpack"
   },
   "repository": {

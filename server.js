@@ -2,8 +2,8 @@
 
 const express = require('express');
 const fs = require('fs');
-const path = require('path');
 const bodyParser = require('body-parser');
+
 const config = require('./config.js');
 
 const app = express();
@@ -16,15 +16,14 @@ app.get('/', function (req, res) {
 	
 	switch(req.query.action) {
 		case 'listFiles': {
-			let path = config.PROJECT_ROOT + req.query.path;
-			if (!fs.existsSync(path)) {
-				fs.mkdirSync(path);
+			if (!fs.existsSync(req.query.path)) {
+				fs.mkdirSync(req.query.path);
 			}
-			const files = fs.readdirSync(path);
+			const files = fs.readdirSync(req.query.path);
 			const items = files.map((entry) => {
 				return {
 					name: entry,
-					isDirectory: fs.lstatSync(path + entry).isDirectory()
+					isDirectory: fs.lstatSync(req.query.path + "/" + entry).isDirectory()
 				}
 			});
 			const sorted_items = items.slice(0).sort((a, b) => {
@@ -46,8 +45,7 @@ app.get('/', function (req, res) {
 		}	
 
 		case 'openFile': {
-			let path = config.PROJECT_ROOT + req.query.path;
-			res.send(fs.readFileSync(path));
+			res.send(fs.readFileSync(req.query.path));
 			break;
 		}
 		
@@ -62,8 +60,7 @@ app.post('/', function(req, res){
 
 	switch(req.body.action) {
 		case 'saveFile': {
-			let path = config.PROJECT_ROOT + req.body.filename;
-			fs.writeFileSync(path, req.body.content);
+			fs.writeFileSync(req.body.filename, req.body.content);
 			res.send('');
 			break;
 		}

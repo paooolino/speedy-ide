@@ -37,7 +37,11 @@ class FileTree extends Component {
 };
 
 FileTree.propTypes = {
-	nodes: PropTypes.array.isRequired,
+	nodes: PropTypes.arrayOf(PropTypes.shape({
+		id: PropTypes.string.isRequired,
+		name: PropTypes.string.isRequired,
+		children: PropTypes.array
+  })),
 	openedFolders: PropTypes.array,
 	selectedLeaves: PropTypes.array,
 	onClickLeaf: PropTypes.func,
